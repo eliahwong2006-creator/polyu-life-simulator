@@ -2,7 +2,7 @@
   "name": "polyu-life-simulator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://YOUR_GITHUB_USERNAME.github.io/polyu-life-simulator",
+  "homepage": "https://eliahwong2006-creator.github.io/polyu-life-simulator",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

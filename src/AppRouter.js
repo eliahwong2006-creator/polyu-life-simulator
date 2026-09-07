@@ -2,15 +2,15 @@
 // Main application router with protected routes
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 
-// Import pages (we'll create these next)
+// Import pages
 import LoginPage from './components/auth/LoginPage';
 import PlayerDashboard from './components/player/PlayerDashboard';
 import AdminPanel from './components/admin/AdminPanel';
 
-// Loading spinner component (simple)
+// Loading spinner component
 const LoadingSpinner = () => (
   <div style={{ 
     display: 'flex', 
@@ -56,7 +56,7 @@ const AdminRoute = ({ children }) => {
   return children;
 };
 
-// Public route (redirects to appropriate page if already logged in)
+// Public route (redirects if already logged in)
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, isAdmin, loading } = useAuth();
   

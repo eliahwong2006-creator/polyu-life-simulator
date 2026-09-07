@@ -13,6 +13,7 @@ import {
   resetGame,
   updateUserAttributes,
   updateUserMoney,
+  deleteAllPlayers,
 } from '../firebase/firestore';
 import { GAME_CONSTANTS } from '../firebase/config';
 
@@ -33,22 +34,35 @@ export const GameProvider = ({ children }) => {
   const [gameState, setGameState] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Action: Delete all non-admin players (admin only)
+  const handleDeleteAllPlayers = useCallback(async () => {
+    try {
+      const result = await deleteAllPlayers();
+      return result;
+    } catch (error) {
+      console.error('Error deleting all players:', error);
+      throw error;
+    }
+  }, []);
+
   // Load real-time data
   useEffect(() => {
     setLoading(true);
 
-    // Listen to all users
+    console.log("GameContext: Setting up listeners...");
+
     const unsubscribeUsers = listenToAllUsers((users) => {
+      console.log("Users updated:", users);
       setPlayers(users);
     });
 
-    // Listen to announcements
     const unsubscribeAnnouncements = listenToAnnouncements((announcements) => {
+      console.log("Announcements updated:", announcements);
       setAnnouncements(announcements);
     });
 
-    // Listen to transactions
     const unsubscribeTransactions = listenToTransactions((transactions) => {
+      console.log("Transactions updated:", transactions);
       setTransactions(transactions);
     });
 
@@ -151,6 +165,7 @@ export const GameProvider = ({ children }) => {
     modifyMoney,
     handleResetGame,
     updateGameStatus,
+    handleDeleteAllPlayers,
     constants: GAME_CONSTANTS,
   };
 

@@ -1,21 +1,24 @@
 // src/components/admin/ResetGame.js
-// Admin interface to reset the entire game with confirmation
+// Admin interface to reset the entire game and delete all players
 
 import React, { useState } from 'react';
 import { useGame } from '../../context/GameContext';
 import { theme } from '../../styles/theme';
 
 const ResetGame = () => {
-  const { handleResetGame } = useGame();
+  const { handleResetGame, handleDeleteAllPlayers } = useGame();
   const [confirmText, setConfirmText] = useState('');
   const [status, setStatus] = useState('');
   const [isResetting, setIsResetting] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [deleteStatus, setDeleteStatus] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const isConfirmed = confirmText === 'RESET';
+  const isResetConfirmed = confirmText === 'RESET';
+  const isDeleteConfirmed = deleteConfirmText === 'DELETE';
 
   const handleReset = async () => {
-    if (!isConfirmed) return;
-
+    if (!isResetConfirmed) return;
     setIsResetting(true);
     setStatus('');
     try {
@@ -30,12 +33,29 @@ const ResetGame = () => {
     }
   };
 
+  const handleDeletePlayers = async () => {
+    if (!isDeleteConfirmed) return;
+    setIsDeleting(true);
+    setDeleteStatus('');
+    try {
+      const result = await handleDeleteAllPlayers();
+      setDeleteConfirmText('');
+      setDeleteStatus(`✅ Deleted ${result.deletedCount} players.`);
+    } catch (error) {
+      console.error('Delete all players failed:', error);
+      setDeleteStatus('❌ Failed to delete players.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Reset Game</h2>
 
+      {/* Reset Game Section */}
       <div style={styles.warningBox}>
-        <h3 style={styles.warningTitle}>⚠️ Warning</h3>
+        <h3 style={styles.warningTitle}>⚠️ Reset All Stats</h3>
         <p>This action will:</p>
         <ul style={styles.warningList}>
           <li>Reset all players' attributes to 0</li>
@@ -68,11 +88,42 @@ const ResetGame = () => {
 
       <button
         onClick={handleReset}
-        style={isConfirmed ? styles.resetButton : styles.resetButtonDisabled}
-        disabled={!isConfirmed || isResetting}
+        style={isResetConfirmed ? styles.resetButton : styles.resetButtonDisabled}
+        disabled={!isResetConfirmed || isResetting}
       >
         {isResetting ? 'Resetting...' : 'Reset Game'}
       </button>
+
+      <div style={styles.divider}></div>
+
+      {/* Delete All Players Section */}
+      <div style={styles.warningBox}>
+        <h3 style={styles.warningTitle}>🗑️ Delete All Players</h3>
+        <p>This will permanently delete all non-admin player accounts. Transactions and announcements will remain.</p>
+        <div style={styles.confirmSection}>
+          <p style={styles.confirmLabel}>Type "DELETE" to confirm:</p>
+          <input
+            type="text"
+            value={deleteConfirmText}
+            onChange={(e) => setDeleteConfirmText(e.target.value)}
+            placeholder="DELETE"
+            style={styles.input}
+            disabled={isDeleting}
+          />
+        </div>
+        {deleteStatus && (
+          <div style={deleteStatus.startsWith('✅') ? styles.success : styles.error}>
+            {deleteStatus}
+          </div>
+        )}
+        <button
+          onClick={handleDeletePlayers}
+          style={isDeleteConfirmed ? styles.deleteButton : styles.deleteButtonDisabled}
+          disabled={!isDeleteConfirmed || isDeleting}
+        >
+          {isDeleting ? 'Deleting...' : 'Delete All Players'}
+        </button>
+      </div>
     </div>
   );
 };
@@ -159,6 +210,32 @@ const styles = {
     cursor: 'not-allowed',
     fontSize: '1rem',
     fontWeight: 'bold',
+  },
+  deleteButton: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#000000',
+    color: 'white',
+    border: 'none',
+    borderRadius: theme.borderRadius.medium,
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+  },
+  deleteButtonDisabled: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#666',
+    color: '#999',
+    border: 'none',
+    borderRadius: theme.borderRadius.medium,
+    cursor: 'not-allowed',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+  },
+  divider: {
+    borderTop: `1px solid ${theme.colors.primary}`,
+    margin: '20px 0',
   },
 };
 

@@ -360,4 +360,21 @@ export const resetGame = async () => {
     console.error('Error resetting game:', error);
     throw error;
   }
+};   // <-- This closing brace was missing
+
+// Delete all non-admin player documents
+export const deleteAllPlayers = async () => {
+  try {
+    const usersCollection = collection(db, COLLECTIONS.USERS);
+    const usersQuery = query(usersCollection, where('isAdmin', '!=', true));
+    const snapshot = await getDocs(usersQuery);
+    
+    const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
+    await Promise.all(deletePromises);
+    
+    return { deletedCount: snapshot.size };
+  } catch (error) {
+    console.error('Error deleting all players:', error);
+    throw error;
+  }
 };
