@@ -9,7 +9,7 @@ const StatCard = ({
   value, 
   color = theme.colors.secondary, 
   icon = null, 
-  max = 10,
+  max = 15,
   showBar = true 
 }) => {
   const percentage = Math.min((value / max) * 100, 100);

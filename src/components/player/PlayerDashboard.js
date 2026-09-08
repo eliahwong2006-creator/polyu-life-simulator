@@ -1,6 +1,7 @@
 // src/components/player/PlayerDashboard.js
 // Main player dashboard with stats, radar chart, and navigation
 
+import Locations from '../locations/Locations';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -24,8 +25,8 @@ const PlayerDashboard = () => {
     wisdom: 0,
     strength: 0,
     social: 0,
-    sanity: 0,
-    energy: constants?.STARTING_ENERGY || 10,
+    sanity: 15,
+    energy: constants?.STARTING_ENERGY || 15,
   };
   const money = currentPlayer?.money ?? constants?.STARTING_MONEY ?? 100;
 
@@ -42,6 +43,8 @@ const PlayerDashboard = () => {
         return <PlayerDirectory />;
       case 'trade':
         return <TradeSystem />;
+      case 'locations':
+        return <Locations />;
       case 'dashboard':
       default:
         return (
@@ -66,7 +69,7 @@ const PlayerDashboard = () => {
                 value={attributes.energy}
                 color={theme.colors.energy}
                 icon="⚡"
-                max={constants?.STARTING_ENERGY || 10}
+                max={constants?.STARTING_ENERGY || 15}
               />
             </div>
 
@@ -78,28 +81,28 @@ const PlayerDashboard = () => {
                 value={attributes.wisdom}
                 color={theme.radarChart.wisdom}
                 icon="📚"
-                max={constants?.MAX_ATTRIBUTE_VALUE || 10}
+                max={constants?.MAX_ATTRIBUTE_VALUE || 15}
               />
               <StatCard
                 label="Strength"
                 value={attributes.strength}
                 color={theme.radarChart.strength}
                 icon="💪"
-                max={constants?.MAX_ATTRIBUTE_VALUE || 10}
+                max={constants?.MAX_ATTRIBUTE_VALUE || 15}
               />
               <StatCard
                 label="Social"
                 value={attributes.social}
                 color={theme.radarChart.social}
                 icon="🎉"
-                max={constants?.MAX_ATTRIBUTE_VALUE || 10}
+                max={constants?.MAX_ATTRIBUTE_VALUE || 15}
               />
               <StatCard
                 label="Sanity"
                 value={attributes.sanity}
                 color={theme.radarChart.sanity}
                 icon="🧠"
-                max={constants?.MAX_ATTRIBUTE_VALUE || 10}
+                max={constants?.MAX_ATTRIBUTE_VALUE || 15}
               />
             </div>
 
@@ -166,6 +169,13 @@ const PlayerDashboard = () => {
         >
           <span style={styles.navIcon}>💱</span>
           <span style={styles.navLabel}>Trade</span>
+        </button>
+        <button
+          style={activeTab === 'locations' ? styles.navButtonActive : styles.navButton}
+          onClick={() => setActiveTab('locations')}
+        >
+          <span style={styles.navIcon}>📍</span>
+          <span style={styles.navLabel}>Locations</span>
         </button>
       </div>
     </div>

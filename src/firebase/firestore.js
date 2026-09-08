@@ -334,7 +334,7 @@ export const resetGame = async () => {
           wisdom: 0,
           strength: 0,
           social: 0,
-          sanity: 0,
+          sanity: GAME_CONSTANTS.STARTING_SANITY,
           energy: GAME_CONSTANTS.STARTING_ENERGY
         },
         money: GAME_CONSTANTS.STARTING_MONEY,

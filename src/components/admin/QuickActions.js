@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useGame } from '../../context/GameContext';
 import { quickActions } from '../../services/quickActions';
 import { theme } from '../../styles/theme';
+import { GAME_CONSTANTS } from '../../firebase/config';
 
 const QuickActions = () => {
   const { players, modifyAttributes, modifyMoney, sendAnnouncement } = useGame();
@@ -38,7 +39,7 @@ const QuickActions = () => {
         if (key === 'money') {
           moneyDelta = value;
         } else if (key in newAttributes) {
-          newAttributes[key] = Math.max(0, Math.min(10, (newAttributes[key] || 0) + value));
+          newAttributes[key] = Math.max(0, Math.min(GAME_CONSTANTS.MAX_ATTRIBUTE_VALUE, (newAttributes[key] || 0) + value));
         }
       }
 

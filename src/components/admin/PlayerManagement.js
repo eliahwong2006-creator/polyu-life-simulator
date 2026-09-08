@@ -6,10 +6,12 @@ import { useGame } from '../../context/GameContext';
 import { quickActions } from '../../services/quickActions';
 import { theme } from '../../styles/theme';
 import RadarChart from '../player/RadarChart';
+import { GAME_CONSTANTS } from '../../firebase/config';
 
 const PlayerManagement = () => {
   const { players, modifyAttributes, modifyMoney, sendAnnouncement } = useGame();
   const [expandedPlayerId, setExpandedPlayerId] = useState(null);
+  const [customAmounts, setCustomAmounts] = useState({});
 
   const handleToggleExpand = (playerId) => {
     setExpandedPlayerId(prev => (prev === playerId ? null : playerId));
@@ -19,13 +21,25 @@ const PlayerManagement = () => {
     const player = players.find(p => p.id === playerId);
     if (!player) return;
     const currentValue = player.attributes?.[attribute] || 0;
-    const newValue = Math.max(0, Math.min(10, currentValue + delta));
+    const newValue = Math.max(0, Math.min(GAME_CONSTANTS.MAX_ATTRIBUTE_VALUE, currentValue + delta));
     const updatedAttributes = { ...player.attributes, [attribute]: newValue };
     await modifyAttributes(playerId, updatedAttributes);
   };
 
   const handleMoneyChange = async (playerId, delta) => {
     await modifyMoney(playerId, delta);
+  };
+
+  const handleCustomMoneyChange = async (playerId, isAdd) => {
+    const amountStr = customAmounts[playerId] || '';
+    const amount = Number(amountStr);
+    if (!amountStr || isNaN(amount) || amount <= 0) return;
+
+    const delta = isAdd ? amount : -amount;
+    await handleMoneyChange(playerId, delta);
+
+    // Clear input after applying
+    setCustomAmounts(prev => ({ ...prev, [playerId]: '' }));
   };
 
   const handleQuickAction = async (player, action) => {
@@ -37,7 +51,7 @@ const PlayerManagement = () => {
         if (key === 'money') {
           moneyDelta = value;
         } else if (key in newAttributes) {
-          newAttributes[key] = Math.max(0, Math.min(10, (newAttributes[key] || 0) + value));
+          newAttributes[key] = Math.max(0, Math.min(GAME_CONSTANTS.MAX_ATTRIBUTE_VALUE, (newAttributes[key] || 0) + value));
         }
       }
     }
@@ -95,7 +109,21 @@ const PlayerManagement = () => {
                     ))}
                     <div style={styles.attributeRow}>
                       <span style={styles.attributeLabel}>Money</span>
-                      <span style={styles.attributeValue}>${player.money || 0}</span>
+                      <span style={styles.attributeValue}>${player.money || 0}</span><span></span><span></span><span></span><span></span>
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="Amount"
+                        value={customAmounts[player.id] || ''}
+                        onChange={(e) => setCustomAmounts(prev => ({ ...prev, [player.id]: e.target.value }))}
+                        style={styles.customInput}
+                      />
+                      <button style={styles.smallButton} onClick={() => handleCustomMoneyChange(player.id, true)}>
+                        +$
+                      </button>
+                      <button style={styles.smallButton} onClick={() => handleCustomMoneyChange(player.id, false)}>
+                        -$
+                      </button>
                       <button style={styles.smallButton} onClick={() => handleMoneyChange(player.id, -50)}>-$50</button>
                       <button style={styles.smallButton} onClick={() => handleMoneyChange(player.id, 50)}>+$50</button>
                       <button style={styles.smallButton} onClick={() => handleMoneyChange(player.id, 200)}>+$200</button>
@@ -202,6 +230,7 @@ const styles = {
     alignItems: 'center',
     gap: '6px',
     marginBottom: '6px',
+    flexWrap: 'wrap',
   },
   attributeLabel: {
     width: '80px',
@@ -221,6 +250,15 @@ const styles = {
     borderRadius: theme.borderRadius.small,
     color: theme.colors.text,
     cursor: 'pointer',
+  },
+  customInput: {
+    width: '70px',
+    padding: '4px',
+    borderRadius: theme.borderRadius.small,
+    border: `1px solid ${theme.colors.secondary}`,
+    backgroundColor: theme.colors.background,
+    color: theme.colors.text,
+    fontSize: '0.8rem',
   },
   quickActionsSection: {
     marginTop: '12px',

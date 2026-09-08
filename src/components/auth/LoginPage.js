@@ -56,8 +56,13 @@ const LoginPage = () => {
   return (
     <div className="login-page" style={styles.container}>
       <div className="login-card" style={styles.card}>
-        <h1 style={styles.title}>PolyU Life Simulator</h1>
-        <p style={styles.subtitle}>The Hong Kong Polytechnic University</p>
+        <h1 style={styles.title}>Welcome!</h1>
+        <p style={styles.subtitle}>香港理得你死工業大學</p>
+        <img  
+          src={`${process.env.PUBLIC_URL}/polyulogo.png`} 
+          alt="PolyU Logo" 
+          style={styles.logo} 
+        />
 
         {error && <div style={styles.error}>{error}</div>}
 
@@ -143,16 +148,23 @@ const styles = {
   title: {
     textAlign: 'center',
     color: '#FFD700',
-    marginBottom: '5px',
+    marginBottom: '2px',
     fontFamily: "'Playfair Display', serif",
-    fontSize: '2rem',
+    fontSize: '3.5rem',
   },
   subtitle: {
     textAlign: 'center',
     color: '#D4A574',
     marginBottom: '20px',
-    fontSize: '0.9rem',
+    fontSize: '1.3rem',
   },
+  logo: {
+  display: 'block',
+  margin: '20px auto 0',
+  width: '100px',        // adjust as needed
+  height: 'auto',
+  borderRadius: '8px',   // optional, for rounded corners
+},
   error: {
     backgroundColor: '#F44336',
     color: 'white',

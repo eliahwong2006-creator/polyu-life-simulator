@@ -40,6 +40,7 @@ export default app;
 export const GAME_CONSTANTS = {
   STARTING_MONEY: Number(process.env.REACT_APP_STARTING_MONEY) || 100,
   STARTING_ENERGY: Number(process.env.REACT_APP_STARTING_ENERGY) || 10,
+  STARTING_SANITY: Number(process.env.REACT_APP_STARTING_SANITY) || 0,
   MAX_ATTRIBUTE_VALUE: Number(process.env.REACT_APP_MAX_ATTRIBUTE_VALUE) || 10,
   MIN_ATTRIBUTE_VALUE: 0,
   ADMIN_EMAIL: process.env.REACT_APP_ADMIN_EMAIL || 'admin@polyu.edu.hk'
