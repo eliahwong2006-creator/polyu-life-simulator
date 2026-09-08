@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/polyu-life-simulator/static/css/main.7c216dbf.css",
-    "main.js": "/polyu-life-simulator/static/js/main.33159a78.js",
+    "main.js": "/polyu-life-simulator/static/js/main.38fc75ca.js",
     "index.html": "/polyu-life-simulator/index.html",
     "main.7c216dbf.css.map": "/polyu-life-simulator/static/css/main.7c216dbf.css.map",
-    "main.33159a78.js.map": "/polyu-life-simulator/static/js/main.33159a78.js.map"
+    "main.38fc75ca.js.map": "/polyu-life-simulator/static/js/main.38fc75ca.js.map"
   },
   "entrypoints": [
     "static/css/main.7c216dbf.css",
-    "static/js/main.33159a78.js"
+    "static/js/main.38fc75ca.js"
   ]
 }
