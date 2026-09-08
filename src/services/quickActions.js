@@ -55,7 +55,7 @@ export const quickActions = [
     label: '❤️ 交友app',
     room: 'Room Z208',
     requirements: { },
-    effects: { sanity: +1, social: +1, energy: -1, strength: -1, money: -50 },
+    effects: { sanity: +1, social: +1, energy: -1, strength: -1 },
     announcement: '',
   },
   {

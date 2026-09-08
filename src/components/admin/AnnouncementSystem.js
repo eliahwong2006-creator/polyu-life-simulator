@@ -17,16 +17,13 @@ const AnnouncementSystem = () => {
 
   // Preset event types with emojis and messages
   const presetEvents = [
-    { id: 'jackpot', label: '🎰 Hit the Jackpot!' },
-    { id: 'challenge', label: '🏆 Won a Challenge!' },
-    { id: 'trade', label: '💰 Made a Big Trade!' },
-    { id: 'leader', label: '📈 Became Leader!' },
-    { id: 'broke', label: '📉 Went Broke!' },
-    { id: 'treasure', label: '💎 Found Hidden Treasure!' },
-    { id: 'graduated', label: '🎓 Graduated Early!' },
-    { id: 'trouble', label: '🚨 Got in Trouble!' },
-    { id: 'job', label: '💼 Got a Job!' },
-    { id: 'fitness', label: '🏋️ Reached Peak Fitness!' },
+    { id: 'HorseRacing', label: '🐎 贏得了賽馬比賽!' },
+    { id: 'challenge', label: '🏆 贏得了 Kahoot!' },
+    { id: 'trade', label: '💰 完成了一筆重磅交易!' },
+    { id: 'broke', label: '📉 破產了!' },
+    { id: 'graduated', label: '🎓 提前畢業!' },
+    { id: 'trouble', label: '🚨 惹了麻煩!' },
+    { id: 'job', label: '💼 找到工作了!' },
   ];
 
   const handleSendAnnouncement = async (e) => {
