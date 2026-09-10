@@ -53,7 +53,7 @@ export const quickActions = [
   {
     id: 'Love1',
     label: '❤️ 交友app',
-    room: 'Room Z208',
+    room: 'Room Z210',
     requirements: { },
     effects: { sanity: +1, social: +1, energy: -1, strength: -1 },
     announcement: '',
@@ -61,7 +61,7 @@ export const quickActions = [
   {
     id: 'Love2',
     label: '❤️ 愛裏沒有懼怕',
-    room: 'Room Z208',
+    room: 'Room Z210',
     requirements: {social: 5},
     effects: { social: +3, sanity: +3, energy: -8, money: -200 },
     announcement: '',
@@ -69,7 +69,7 @@ export const quickActions = [
   {
     id: 'Hallgame1',
     label: '🏠 背金句',
-    room: 'Room Z506',
+    room: 'Room Z208',
     requirements: { },
     effects: { sanity: -1, social: +1, energy: -1, money: -20 },
     announcement: '',
@@ -77,7 +77,7 @@ export const quickActions = [
   {
     id: 'Hallgame2',
     label: '🏠 拍7',
-    room: 'Room Z506',
+    room: 'Room Z208',
     requirements: { },
     effects: { sanity: +1, social: +2, energy: -3, money: -20 },
     announcement: '',
@@ -90,12 +90,20 @@ export const quickActions = [
     effects: { energy: +3, money: -10 },
     announcement: '',
   },
-    {
+  {
     id: 'red bull',
     label: '🍺 red bull',
     room: 'Shop (Z210)',
     requirements: { },
     effects: { energy: +7, money: -20 },
+    announcement: '',
+  },
+ {
+    id: 'resting',
+    label: '🛌 休息室',
+    room: 'Z506',
+    requirements: { },
+    effects: { },
     announcement: '',
   },
 ];
