@@ -62,7 +62,7 @@ export const quickActions = [
     id: 'Love2',
     label: '❤️ 愛裏沒有懼怕',
     room: 'Room Z210',
-    requirements: {social: 5, energy: 8, money: 200, 完成❤️ 交友app},
+    requirements: {social: 5, energy: 8, money: 200},
     effects: { social: +3, sanity: +4, energy: -8, money: -200 },
     announcement: '',
   },
